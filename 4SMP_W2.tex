@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsfonts,amsmath,amsthm,amssymb}
+\usepackage{titlesec}
+\usepackage{titling}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta}
+
+\setlength{\droptitle}{-3cm}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{0.5em}{}
+
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+\title{Semester Project \\ \large Week 2}
+
+\author{Samman Thapaliya}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Compartmental Model}
+A compartmental model is a mathematical model that divides a population into separate groups called compartments, where each group represents a different state or condition.
+
+People  move from one compartment to another over time according to certain rules or rates.
+
+\section{Deterministic model}
+A deterministic model is a model in which the output is completely determined by the input values and equations. If you run the model multiple times with the same parameters and initial conditions, you always get exactly the same result.
+
+The SEIR model is deterministic because it uses fixed mathematical equations to describe how people move between compartments
+
+\section{The SEIR model}
+The SEIR model  is a mathematical epidemiological model that is used to study how infectious diseases spread through a population over time.
+\begin{itemize}
+    \item \textbf{S --- Susceptible} \\
+    People who can catch the disease.
+
+    \item \textbf{E --- Exposed} \\
+    People who are infected but not yet infectious (incubation period).
+
+    \item \textbf{I --- Infectious} \\
+    People who can spread the disease.
+
+    \item \textbf{R --- Recovered/Removed} \\
+    People who recovered, died, or are no longer part of transmission.
+\end{itemize}
+
+the model flows as 
+\tikzset{ startstop/.style = {rectangle,rounded corners,minimum width=3cm,minimum height=1cm,align=center,draw=black,fill=white!30 }, arrow/.style = { thick, ->, >=stealth}}
+
+
+
+\begin{tikzpicture}[node distance=1cm]
+
+\node (S) [startstop] {S};
+\node (E) [startstop, right=of S] {E};
+\node (I) [startstop, right=of E] {I};
+\node (R) [startstop, right=of I] {R};
+
+\draw [arrow] (S) -- (E);
+\draw [arrow] (E) -- (I);
+\draw [arrow] (I) -- (R);
+
+\end{tikzpicture}
+the equations that govern this model are 
+\begin{align}
+\frac{dS}{dt} &= -\beta \frac{SI}{N} \\
+\frac{dE}{dt} &= \beta \frac{SI}{N} - \sigma E \\
+\frac{dI}{dt} &= \sigma E - \gamma I \\
+\frac{dR}{dt} &= \gamma I
+\end{align}
+where,
+\begin{itemize}
+
+\item S -- Susceptible population
+\item E -- Exposed population
+\item I -- Infected population
+\item R-- Recovered population
+\item Total Population (N) = S + E + I + R
+\item $\beta$ -- transmission rate
+\item $\sigma$ -- rate of progression from exposed to infected
+\item $\gamma$ -- recovery rate
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}
+
