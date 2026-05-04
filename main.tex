@@ -1,0 +1,190 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+
+\title{Evaluation Metrics for Regression Models}
+\author{SAMMAN THAPALIYA}
+\date{May 4,  2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Abstract}
+Regression models are core concepts for machine learning. Evaluating their performances requires several metrics that measure both prediction error and goodness of fit. This report reviews key evaluation metrics used for regression models
+\section{Introduction}
+\subsection{Regression}
+Regression analysis aims to model relationships between dependent and independent variables to predict the outputs. It is essential to evaluate the model to determine the accuracy and generalizability. Since no single evaluation metric can successfully evaluate the model, multiple metrics are used.
+
+
+General regression model equation:
+
+\begin{equation}
+    Y = \beta_o + \beta_1X_1 + \beta_2X_2 ... + \beta_pX_p + \epsilon
+\end{equation}
+where,
+\begin{itemize}
+    \item Y = Dependent variable
+    \item  $\beta_p$ = Intercept 
+    \item   $X_1, X_2, ..., X_p$ = Independent variable
+    \item $\epsilon$ = Error term
+\end{itemize}
+\newpage
+\section{Literature Review}
+
+Numerous studies have explored regression evaluation metrics and their effectiveness. According to \textit{An Introduction to Statistical Learning}, error-based metrics such as MSE and RMSE are widely used due to their mathematical properties and interpretability in optimization.
+
+Research also shows that MAE is more robust to outliers compared to MSE, as it does not square the errors \cite{willmott2005}. Meanwhile, percentage-based metrics like MAPE are useful in business applications but can be problematic when actual values approach zero \cite{hyndman2006}.
+
+The coefficient of determination ($R^2$) is commonly used to measure explanatory power, although it may not always reflect predictive accuracy \cite{chicco2021}.
+\section{Evaluation metrics}
+\subsection{Error Based Metrics}
+
+    \subsubsection{ Mean Absolute Error(MAE)}
+    Mean Absolute Error (MAE) is a standard regression evaluation metric that quantifies the average magnitude of prediction errors, without considering their direction.
+
+    MAE is defined as:
+
+    \begin{equation}
+        MAE = \frac{1}{N}\sum_{i=1}^{n} \left| y_i - \hat{y}_i \right|
+    \end{equation}
+    \begin{itemize}
+    \item it is always positive.
+    \item  it measures  average absolute deviation between predicted and actual values.
+    \item the output is in the same unit as the target variable.
+    \item it is less sensitive to outliers.
+    \item overestimation and underestimation are treated equally
+    \item limitaion : it doesn't penalize large errors strongly.
+\end{itemize}
+
+\subsubsection{Mean Squared Error (MSE)}
+    Mean Squared Error (MSE) is a standard regression evaluation metric that quantifies the average squared difference between observed values and model predictions. It is one of the most commonly used loss functions in optimization problems, particularly in linear regression and neural networks.
+    \begin{equation}
+        MSE = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2
+    \end{equation}
+    \begin{itemize}
+        \item it measures how close predicted values are to the actual values
+        \item since the errors are squared,
+        larger errors are penalized more 
+        \item limitation: outliers highly affect this and it is  not expressed in the same unit as the target variable
+            
+    \end{itemize}
+
+\subsubsection{Root Mean Squared Error (RMSE)}
+
+Root Mean Squared Error (RMSE) is a regression evaluation metric that measures the square root of the average squared differences between actual and predicted values. It is commonly used because it provides error values in the same unit as the target variable, making it more interpretable than MSE.
+
+\begin{equation}
+    RMSE = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2}
+\end{equation}
+
+\begin{itemize}
+    \item it measures the standard deviation of prediction errors
+    \item it is always non-negative, and a value of 0 indicates a perfect model
+    \item it gives higher weight to large errors due to squaring before averaging
+    \item it is expressed in the same unit as the target variable, making it easier to interpret compared to MSE
+    \item it is more sensitive to outliers compared to MAE
+    \item limitation: it can be heavily influenced by large errors, which may distort overall performance interpretation
+\end{itemize}
+
+\subsection{Goodness of Fit Metrics}
+Goodness of fit metrics are used to measure how well a regression model explains the variation in the dependent variable. These metrics evaluate the proportion of variance captured by the model and indicate the overall explanatory power rather than just the prediction error.
+
+
+\subsubsection{Coefficient of Determination ($R^2$)}
+
+    The Coefficient of Determination ($R^2$) measures the proportion of the variance in the dependent variable that is explained by the independent variables in the model.
+
+    \begin{equation}
+        R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
+    \end{equation}
+
+    \begin{itemize}
+        \item it indicates how well the model fits the data
+        \item its value ranges from 0 to 1 (can be negative in poorly fitting models)
+        \item higher value indicates better model performance
+        \item limitation: it does not indicate prediction error directly and can be misleading when used alone
+    \end{itemize}
+
+\subsubsection{Adjusted $R^2$}
+
+ Adjusted $R^2$ is a modified version of $R^2$ that adjusts for the number of predictors in the model. It penalizes unnecessary variables to prevent overfitting.
+
+   \begin{equation}
+       R^2_{adj} = 1 - \left( \frac{n - 1}{n - p - 1} \right)(1 - R^2)
+    \end{equation}
+
+    where,
+    \begin{itemize}
+        \item $n$ = number of observations
+        \item $p$ = number of independent variables
+    \end{itemize}
+
+    \begin{itemize}
+        \item it adjusts $R^2$ by considering model complexity
+        \item it decreases when irrelevant predictors are added
+        \item it is more reliable for comparing multiple regression models
+        \item limitation: it is still based on $R^2$ and inherits some of its limitations
+    \end{itemize}
+
+    \subsection{Percentage based metrics}
+    \subsubsection{Mean Absolute Percentage Error (MAPE)}
+
+Mean Absolute Percentage Error (MAPE) is a regression evaluation metric that measures the average magnitude of prediction errors as a percentage of actual values.
+
+It is widely used in forecasting problems where interpretability in percentage terms is important.
+
+\begin{equation}
+    MAPE = \frac{100}{n} \sum_{i=1}^{n} \left| \frac{y_i - \hat{y}_i}{y_i} \right|
+\end{equation}
+
+\begin{itemize}
+    \item it expresses error as a percentage, making it easy to interpret
+    \item it is scale-independent, unlike MAE, MSE, and RMSE
+    \item it is commonly used in business and financial forecasting applications
+    \item it is highly sensitive when actual values ($y_i$) are close to zero
+    \item limitation: it can become undefined or extremely large when actual values are zero or near zero
+\end{itemize}
+
+\section{Discussion}
+    The choice of evaluation metric significantly impacts the model's assessment. Each metric excels in capturing different aspects of the prediction performance and hence no single metric is sufficient enough for all regression problems.
+    For example, $R^2$ metric excels when we need an explanatory force, MAE is preferred when all errors are to be treated equally, MSE and RMSE are better when larger errors must be penalized.   
+
+    In a nutshell, multiple metrics should be used to gather to achieve a comprehensive evaluation
+
+    \section{Conclusion}
+    Regression evaluation metrics provide different perspectives on model performance. No single metric is sufficient in all scenarios.Error based metrics excel in measuring prediction accuracy, percentage based metrics help us to interpret the numbers, goodness of fit metrics provide us with an explanatory force. At the end, the metric selection depends on the domain, application, data distribution, error tolerance etc.
+
+   \newpage
+    \begin{thebibliography}{9}
+
+\bibitem{isl}
+James, G., Witten, D., Hastie, T., \& Tibshirani, R. (2021).  
+\textit{An Introduction to Statistical Learning: with Applications in R}.  
+Springer.
+
+\bibitem{hyndman2006}
+Hyndman, R. J., \& Koehler, A. B. (2006).  
+Another look at measures of forecast accuracy.  
+\textit{International Journal of Forecasting}, 22(4), 679–688.
+
+\bibitem{willmott2005}
+Willmott, C. J., \& Matsuura, K. (2005).  
+Advantages of the mean absolute error (MAE) over the root mean square error (RMSE).  
+\textit{Climate Research}, 30(1), 79–82.
+
+\bibitem{chicco2021}
+Chicco, D., Warrens, M. J., \& Jurman, G. (2021).  
+The coefficient of determination R-squared is more informative than SMAPE, MAE, MAPE, MSE and RMSE in regression analysis evaluation.  
+\textit{PeerJ Computer Science}, 7, e623.
+
+\bibitem{faraway2016}
+Faraway, J. J. (2016).  
+\textit{Extending the Linear Model with R: Generalized Linear, Mixed Effects and Nonparametric Regression Models}.  
+CRC Press.
+
+\end{thebibliography}
+    
+\end{document}
